@@ -19,6 +19,7 @@ namespace ApiApp.Controllers
         string LastUsedItemType;
         List<DataBaseItemClass> CachedItems = new List<DataBaseItemClass>();
         List<DataBaseItemClass> returnItems = new List<DataBaseItemClass>();
+        List<DataBaseNewsItemClass> returnNews = new List<DataBaseNewsItemClass>();
         [HttpGet]
         public string Get()
         {
@@ -69,6 +70,34 @@ namespace ApiApp.Controllers
 
             return JsonSerializer.Serialize(returnItems);
         }
+        [Route("/advGetNews")]
+        [HttpGet]
+        public string AdvancedGetNews(int SegmentIndex, int SegmentSize)
+        {
+               using (InfoContext db = new InfoContext())
+                {
+
+                    foreach (var element in db.NewsDataBase.Skip(SegmentIndex * SegmentSize).Take(SegmentSize))
+                    {
+                        returnNews.Add(element);
+                    }
+                }
+            return JsonSerializer.Serialize(returnNews);
+        }
+        [Route("/getNewscount")]
+        [HttpGet]
+        public string GetNewsCount()
+        {
+            using (InfoContext db = new InfoContext())
+            {
+
+                return JsonSerializer.Serialize(db.NewsDataBase.Count());
+            }
+
+
+        }
+
+
         [Route("/getdbcount")]
         [HttpGet]
         public string GetCount()

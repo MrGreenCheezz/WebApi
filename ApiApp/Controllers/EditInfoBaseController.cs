@@ -52,6 +52,42 @@ namespace ApiApp.Controllers
                 }
             }
         }
+        [Route("[controller]/AddNewsItem")]
+        [HttpPost]
+        public void AddNewsItem(IFormCollection form)
+        {
+            DataBaseNewsItemClass newItem = new DataBaseNewsItemClass();
+            System.Diagnostics.Debug.WriteLine(form["Content"]);
+            newItem.NewsContent = form["Content"];
+            newItem.NewsHeader = form["NewsHeader"];
+            try
+            {
+                using (var fileStream = System.IO.File.Create(Directory.GetCurrentDirectory() + "/" + "Images" + "/" + form.Files[0].FileName))
+                {
+                    form.Files[0].CopyTo(fileStream);
+                }
+                newItem.NewsPictureLink = "http://mrgreencheezz.ddns.net:90/PictureApi/getPic?PicName=" + form.Files[0].FileName;
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("No file!");
+            }
+            using (InfoContext db = new InfoContext())
+            {
+                newItem.Id = (db.NewsDataBase.Count() + 1).ToString();
+                db.NewsDataBase.Add(newItem);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.InnerException);
+                }
+            }
+
+        }
+
        [Route("/PictureApi/getPic")]
        [HttpGet]
         public ActionResult GetPicture(string PicName)

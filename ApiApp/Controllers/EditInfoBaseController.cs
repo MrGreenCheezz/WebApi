@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors;
 
@@ -16,7 +12,7 @@ namespace ApiApp.Controllers
     [EnableCors("AllowOrigin")]
     public class EditInfoBaseController : ControllerBase
     {
-        [Route("[controller]/Addnew")]
+        [Route("/Products/addProduct")]
         [HttpPost]
         public void AddNewElement(IFormCollection form)
         {
@@ -52,7 +48,7 @@ namespace ApiApp.Controllers
                 }
             }
         }
-        [Route("[controller]/AddNewsItem")]
+        [Route("/News/AddItem")]
         [HttpPost]
         public void AddNewsItem(IFormCollection form)
         {
@@ -88,13 +84,13 @@ namespace ApiApp.Controllers
 
         }
 
-       [Route("/PictureApi/getPic")]
+       [Route("/Pictures/FetchPicture")]
        [HttpGet]
         public ActionResult GetPicture(string PicName)
         {
             return base.PhysicalFile(Directory.GetCurrentDirectory() + "/" + "Images"+"/"+PicName, "image/jpeg");
         }
-        [Route("/PictureApi/addPic")]
+        [Route("/Pictures/AddPicture")]
         [HttpPost]
         public void AddPic(IFormFile fileToUpload)
         {
@@ -113,7 +109,7 @@ namespace ApiApp.Controllers
             }
            
         }
-        [Route("[controller]/EditElement")]
+        [Route("/Products/EditElement")]
         [HttpPost]
         public void EditElement(DataBaseItemClass newItem, string itemID)
         {

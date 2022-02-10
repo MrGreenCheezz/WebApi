@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ApiApp.Controllers
 {
@@ -33,7 +32,7 @@ namespace ApiApp.Controllers
 
             return JsonSerializer.Serialize(returnItems);
         }
-        [Route("/advget")]
+        [Route("/Products/segmentedProductFetch")]
         [HttpGet]
         public string AdvancedGet(int SegmentIndex, int SegmentSize, string ItemType )
         {
@@ -70,7 +69,7 @@ namespace ApiApp.Controllers
 
             return JsonSerializer.Serialize(returnItems);
         }
-        [Route("/advGetNews")]
+        [Route("/News/segmentedNewsFetch")]
         [HttpGet]
         public string AdvancedGetNews(int SegmentIndex, int SegmentSize)
         {
@@ -84,7 +83,7 @@ namespace ApiApp.Controllers
                 }
             return JsonSerializer.Serialize(returnNews);
         }
-        [Route("/getNewscount")]
+        [Route("/News/NewsCount")]
         [HttpGet]
         public string GetNewsCount()
         {
@@ -98,7 +97,7 @@ namespace ApiApp.Controllers
         }
 
 
-        [Route("/getdbcount")]
+        [Route("/Products/ProductsCount")]
         [HttpGet]
         public string GetCount()
         {
